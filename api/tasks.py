@@ -4,19 +4,19 @@ from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
 from celery import shared_task
 
-from .models import Cryptocurrency
+from .models import CryptoCurrency
 
 
 def get_currency_data(row):
     cryptocurrency = row.find(
         'span', class_='profile__name'
-    ).get_text().strip().replace('\n', '')
+    ).get_text().strip().replace('\n', '').split()
     values = row.find_all('div', class_='valuta')
     price = values[0].get_text().strip().replace('\n', '')
     market_cap = values[1].get_text().strip().replace('\n', '')
     change = row.find(
         'div', class_='change'
-    ).find('span').get_text().strip().replace('\n', '')
+    ).get_text().strip().replace('\n', '')
     return {
         'cryptocurrency': cryptocurrency,
         'price': price,
@@ -45,12 +45,12 @@ def get_currency():
     bs = BeautifulSoup(html, 'html.parser')
     rows = bs.find(
         'tbody', class_='table__body'
-    ).find_all('tr', class_='table__row')[:5]
+    ).find_all('tr', class_='table__row')[1:6]
 
     for row in rows:
         data = get_currency_data(row)
         print(data)
-        Cryptocurrency.objects.create(**data)
+        CryptoCurrency.objects.create(**data)
         sleep(5)
 
 
@@ -71,17 +71,18 @@ def update_currency():
     bs = BeautifulSoup(html, 'html.parser')
     rows = bs.find(
         'tbody', class_='table__body'
-    ).find_all('tr', class_='table__row')[:5]
+    ).find_all('tr', class_='table__row')[1:6]
 
     for row in rows:
         data = get_currency_data(row)
         print(data)
-        Cryptocurrency.objects.filter(
+        CryptoCurrency.objects.filter(
             cryptocurrency=data['cryptocurrency']
         ).update(**data)
         sleep(5)
 
-if not Cryptocurrency.objects:
+
+if not CryptoCurrency.objects:
     get_currency()
 
 while True:
