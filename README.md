@@ -14,5 +14,5 @@ python3 manage.py migrate
 python3 manage.py runserve
 ```
 
-celery command:
+celery worker command:
 ```celery -A crypto_tracker worker -l info```
