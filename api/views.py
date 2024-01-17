@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import generics
 
-# Create your views here.
+from .models import Cryptocurrency
+from .serializers import CryptocurrencySerializer
+
+
+class ListCryptocurrencyView(generics.ListAPIView):
+    queryset = Cryptocurrency.objects.all()
+    serializer_class = CryptocurrencySerializer
