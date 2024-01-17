@@ -10,7 +10,7 @@ from .models import CryptoCurrency
 def get_currency_data(row):
     cryptocurrency = row.find(
         'span', class_='profile__name'
-    ).get_text().strip().replace('\n', '').split()
+    ).get_text().strip().replace('\n', '')
     values = row.find_all('div', class_='valuta')
     price = values[0].get_text().strip().replace('\n', '')
     market_cap = values[1].get_text().strip().replace('\n', '')
@@ -82,7 +82,7 @@ def update_currency():
         sleep(5)
 
 
-if not CryptoCurrency.objects:
+if not CryptoCurrency.objects.exists():
     get_currency()
 
 while True:
