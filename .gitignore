@@ -1,0 +1,8 @@
+# Ignore all SQLite database files
+*.sqlite3
+*.db
+
+# Ignore all migration folders and files within any app
+*/migrations/
+!*/migrations/__init__.py
+db.sqlite3
