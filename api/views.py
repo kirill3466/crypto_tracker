@@ -1,9 +1,9 @@
 from rest_framework import generics
 
-from .models import Cryptocurrency
-from .serializers import CryptocurrencySerializer
+from .models import CryptoCurrency
+from .serializers import CryptoCurrencySerializer
 
 
-class ListCryptocurrencyView(generics.ListAPIView):
-    queryset = Cryptocurrency.objects.all()
-    serializer_class = CryptocurrencySerializer
+class ListCryptoCurrencyView(generics.ListAPIView):
+    queryset = CryptoCurrency.objects.all()
+    serializer_class = CryptoCurrencySerializer
