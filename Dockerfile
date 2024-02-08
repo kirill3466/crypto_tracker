@@ -17,7 +17,7 @@ COPY . .
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
-# fix \r typos in entrypoint
+# fix \r typos in entrypoint made by windows after copying to container
 RUN apt-get install dos2unix
 RUN dos2unix entrypoint.sh
 
