@@ -6,4 +6,5 @@ using bs4 and celery every n-seconds
 
 
 ## Start
+add .env file with keys for settings
 run docker compose up 😀
