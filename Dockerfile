@@ -8,8 +8,10 @@ RUN apt-get upgrade -y
 
 WORKDIR /app
 
-COPY ./requirements.txt ./
-RUN pip install -r requirements.txt
+COPY ./pyproject.toml ./poetry.lock* /app/
+RUN pip install --no-cache-dir poetry \
+    && poetry config virtualenvs.create false \
+    && poetry install --no-interaction --no-ansi
 
 
 COPY . .
